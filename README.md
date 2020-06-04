@@ -1,3 +1,3 @@
-# it's the future man
+# in a caravan
 
-The future is now old man haha
+it's the future man
