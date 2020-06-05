@@ -13,13 +13,8 @@ const __dirname = eval("Deno.cwd()");
 const app = new Application(),
   router = new Router();
 
-app.get("/", async ctx => {
-  ctx.res.setMimeType("text/html");
-  ctx.res.addHeader("t", "e");
-  return await readFileStr(`${__dirname}/views/index.html`);
-});
-
-app.get("[/.*.js]|[/.*.css]", async ctx => {
+//serve
+app.get(".*", async ctx => {
   {
     let mime;
     switch (ctx.req.path.split(".")[ctx.req.path.split(".").length - 1]) {
@@ -31,14 +26,18 @@ app.get("[/.*.js]|[/.*.css]", async ctx => {
       case "js": {
         mime = "text/javascript";
       }
-      default: {
-        mime = "unknown";
-      }
     }
-    mime && ctx.res.setMimeType(mime);
+    if (mime) {
+      ctx.res.setMimeType(mime);
+      return await readFileStr(`${__dirname}/assets/${ctx.req.path.slice(1)}`);
+    } else {
+      ctx.res.setMimeType("text/html");
+      return (await readFileStr(`${__dirname}/views/index.html`)).replace(
+        "{{from}}",
+        ctx.req.path
+      );
+    }
   }
-
-  return await readFileStr(`${__dirname}/assets/${ctx.req.path.slice(1)}`);
 });
 
 (async () => {
