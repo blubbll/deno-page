@@ -4,7 +4,8 @@
     <title>a new era</title>
     <!-- path -->
     <meta name="path" content="{{from}}" />
-
+    <!-- host -->
+    <base href="{{base}}">
     <!-- mobile eh -->
     <meta
       name="viewport"
@@ -26,56 +27,71 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/Primer/14.4.0/primer.min.css"
     />
     <link rel="stylesheet" href="custom.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.1/knockout-latest.min.js"></script>
-    <script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
-    <script src="custom.js" defer></script>
+    <style>
+      body *:not(div):not(view){
+        transition: opacity 499ms ease;
+        opacity: 1;
+      }
+      body.loading *:not(div):not(view) {
+        opacity: 0;
+      }
+    </style>
   </head>
-  <body>
+  <body class="loading">
     <div class="bg-blue">
       <header
         class="container-lg mx-auto p-responsive d-flex flex-items-center flex-wrap flex-md-nowrap py-3"
       >
-        <h3 class="mr-4 text-white pb-1">
-          deno-page
+        <h3 class="mr-4 pb-1">
+          <a href="/" class="text-white">deno-page</a>
         </h3>
-        <a class="text-white mr-3" href="https://primer.style/css">Docs</a>
-        <a
-          class="text-white mr-3"
-          href="https://github.com/@primer/css/blob/master/CHANGELOG.md"
-          >Changelog</a
-        >
-        <a class="text-white mr-3" href="https://primer.github.io/storybook/"
-          >Storybook</a
-        >
+        <a class="text-white mr-3" href="/click">Click me</a>
+        <a class="text-white mr-3" href="/sub/dir">sub dir</a>
       </header>
     </div>
+    <noscript>Pweaze enable js</noscript>
 
-    <div class="container-lg mx-auto py-6 p-responsive my-auto">
-      <div class="markdown-body">
-        <h1>Configuration</h1>
-        <ul class="f3 py-4">
-          <li>
-            This template includes built CSS from Primer Core, Product, and
-            Marketing packages.
-          </li>
-          <li>
-            The Preprocessor is set to SCSS so that you can write new Sass on
-            top of Primer.
-          </li>
-          <li>
-            The prefixer is set to Autoprefixer to match GitHub.com's prefixer.
-          </li>
-        </ul>
-      </div>
-    </div>
+    <views>
+      <view
+        path="/"
+        class="container-lg mx-auto py-6 p-responsive my-auto"
+        data-bind="view"
+      >
+        <div class="markdown-body">
+          <h1>Hello World!</h1>
+        </div>
+      </view>
+      <view
+        path="/click"
+        class="container-lg mx-auto py-6 p-responsive my-auto"
+        data-bind="view"
+      >
+        <div class="markdown-body">
+          <h1>You clicked me!</h1>
+        </div>
+      </view>
+      <view
+        path="/sub/dir"
+        class="container-lg mx-auto py-6 p-responsive my-auto"
+        data-bind="view"
+      >
+        <div class="markdown-body">
+          <h1>I heard this is a subdir</h1>
+        </div>
+      </view>
+    </views>
+
     <div class="bg-gray-dark">
       <footer
         class="container-lg mx-auto p-responsive d-flex flex-items-center flex-wrap flex-md-nowrap py-3"
       >
-        <p class="text-white">
+        <p class="text-white mb-0">
           &copy;<span data-bind="text: year"></span> by Blubbll
         </p>
       </footer>
     </div>
   </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.1/knockout-latest.min.js"></script>
+  <script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
+  <script src="custom.js" defer></script>
 </html>

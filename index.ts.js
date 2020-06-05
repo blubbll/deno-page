@@ -32,10 +32,12 @@ app.get(".*", async ctx => {
       return await readFileStr(`${__dirname}/assets/${ctx.req.path.slice(1)}`);
     } else {
       ctx.res.setMimeType("text/html");
-      return (await readFileStr(`${__dirname}/views/index.html`)).replace(
-        "{{from}}",
-        ctx.req.path
-      );
+      return (await readFileStr(`${__dirname}/views/index.html`))
+        .replace("{{from}}", ctx.req.path)
+        .replace(
+          "{{base}}",
+          `//${ctx.req.original.headers.get("host")}/`
+        );
     }
   }
 });
