@@ -12,7 +12,7 @@ const __dirname = eval("Deno.cwd()");
 
 const app = new Application(),
   router = new Router(),
-  host = "http://deno-page.glitch.me/";
+  host = "https://deno-page.glitch.me";
 
 {
   //sitemap
@@ -73,7 +73,7 @@ app.get(".*", async ctx => {
         .replace(
           "{{base}}",
           //`//${ctx.req.original.headers.get("host")}/`
-          `${host}/`
+          `${host}`
         );
     }
   }
