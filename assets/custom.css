@@ -10,6 +10,11 @@ views {
   height: 100%;
   width: 100%;
   display: flex;
+  transition: opacity 999ms ease;
+  opacity: 1;
+}
+views.loading {
+  opacity: 0;
 }
 view {
   height: inherit;
@@ -17,6 +22,7 @@ view {
   display: none;
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
 
 noscript {
@@ -30,4 +36,16 @@ noscript {
   font-size: 5vmax;
   text-align: center;
   position: absolute;
+}
+
+.fof h1{
+	  font-size: 50px;
+	  display: inline-block;
+	  padding-right: 12px;
+	  animation: type .5s alternate infinite;
+}
+
+@keyframes type{
+	  from{box-shadow: inset -3px 0px 0px #888;}
+	  to{box-shadow: inset -3px 0px 0px transparent;}
 }

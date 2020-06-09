@@ -9,8 +9,14 @@ let { model, ruru } = window;
 
 //custom routing extension
 ruru = args => {
-   $("body").classList.add("loading");
-  if (!args.first) {
+  if (args.ctx && args.ctx.state.path === model.state().path) return false;
+
+  for (const v of $$("view")) $("views").classList.remove("loading");
+
+  const _view = $(`[path="${args.ctx.state.path}"]`);
+  _view && _view.classList.add("loading");
+
+  if (model.firstrouted || !args.first) {
     //only if we aren't here already
     if (args.ctx.state.path !== model.state().path) {
       console.log("%c Routing to", "background: #222; color: lime", {
@@ -33,7 +39,7 @@ ruru = args => {
     model.firstrouted = true;
     page.replace(model.state().path);
   }
-   setTimeout(()=>$("body").classList.remove("loading"), 50);
+  setTimeout(() => $("views").classList.remove("loading"), 999);
 };
 
 //inherited path from server
@@ -44,7 +50,6 @@ page.configure({ window: window });
 
 ko.bindingHandlers.view = {
   init: (element, valueAccessor) => {
-    console.log(element.getAttribute("path"));
     element.style.display =
       element.getAttribute("path") === model.state().path ? "flex" : "none";
   },
@@ -88,11 +93,19 @@ ko.applyBindings(
   page("/sub/dir", (ctx, next) => {
     ruru({ ctx });
   });
+  page("/*", (ctx, next) => {
+    ruru({ ctx: { state: { path: "404" } } });
+  });
 }
 
 //execute route from server (or default route)
 {
   const _path = initialpath === "/" ? "/" : initialpath;
   model.state({ path: _path });
-  ruru({ cb: model.goToFolder, param: _path, first: true });
+  ruru({
+    ctx: { state: { path: "" } },
+    cb: model.goToFolder,
+    param: _path,
+    first: true
+  });
 }

@@ -11,12 +11,48 @@ import {
 const __dirname = eval("Deno.cwd()");
 
 const app = new Application(),
-  router = new Router();
+  router = new Router(),
+  host = "http://deno-page.glitch.me/";
+
+{
+  //sitemap
+  let sitemap = "";
+  const start = `
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">`;
+  const end = `</urlset>`;
+  sitemap += start;
+  const dirs = {
+    click: {
+      path: "/click"
+    }
+  };
+
+  for (const dir in dirs) {
+    sitemap += `<url>
+<loc>${host}/${dir}</loc>
+<lastmod>${new Date().toISOString()}</lastmod>
+<priority>1.0</priority>
+</url>`;
+  }
+  sitemap += end;
+  sitemap = sitemap.trim();
+
+  app.get("/sitemap.xml", async ctx => {
+    ctx.res.setMimeType("application/xml");
+    return sitemap;
+  });
+}
 
 //serve
 app.get(".*", async ctx => {
   {
     let mime;
+
     switch (ctx.req.path.split(".")[ctx.req.path.split(".").length - 1]) {
       case "css":
         {
@@ -36,7 +72,8 @@ app.get(".*", async ctx => {
         .replace("{{from}}", ctx.req.path)
         .replace(
           "{{base}}",
-          `//${ctx.req.original.headers.get("host")}/`
+          //`//${ctx.req.original.headers.get("host")}/`
+          `${host}/`
         );
     }
   }
