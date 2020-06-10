@@ -1,7 +1,7 @@
 body {
-  height: 100vh;
-  width: 100vw;
-  /* position: absolute; */
+  height: 100%;
+  width: 100%;
+  position: absolute;
   display: flex;
   flex-direction: column;
 }
@@ -10,13 +10,16 @@ views {
   height: 100%;
   width: 100%;
   display: flex;
-  transition: opacity 999ms ease;
-  opacity: 1;
+  /*opacity: 1;*/
 }
-views.loading {
-  opacity: 0;
+view.loading {
+  /*opacity: 0;*/
+  filter: blur(.42rem);
 }
 view {
+  /*transition: opacity 999ms ease;*/
+  transition: filter 99ms ease;
+  filter:  none;
   height: inherit;
   width: inherit;
   display: none;
@@ -38,14 +41,16 @@ noscript {
   position: absolute;
 }
 
-.fof h1{
-	  font-size: 50px;
-	  display: inline-block;
-	  padding-right: 12px;
-	  animation: type .5s alternate infinite;
+.typing {
+    padding-right: 12px;
+  animation: type 0.5s alternate infinite;
 }
 
-@keyframes type{
-	  from{box-shadow: inset -3px 0px 0px #888;}
-	  to{box-shadow: inset -3px 0px 0px transparent;}
+@keyframes type {
+  from {
+    box-shadow: inset -3px 0px 0px #888;
+  }
+  to {
+    box-shadow: inset -3px 0px 0px transparent;
+  }
 }

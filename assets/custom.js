@@ -11,10 +11,11 @@ let { model, ruru } = window;
 ruru = args => {
   if (args.ctx && args.ctx.state.path === model.state().path) return false;
 
-  for (const v of $$("view")) $("views").classList.remove("loading");
+  for (const v of $$("view")) v.classList.remove("loading");
 
   const _view = $(`[path="${args.ctx.state.path}"]`);
-  _view && _view.classList.add("loading");
+  setTimeout(() => _view && _view.classList.add("loading"), 0);
+  setTimeout(() => _view && _view.classList.remove("loading"), 99);
 
   if (model.firstrouted || !args.first) {
     //only if we aren't here already
@@ -39,7 +40,7 @@ ruru = args => {
     model.firstrouted = true;
     page.replace(model.state().path);
   }
-  setTimeout(() => $("views").classList.remove("loading"), 999);
+  //setTimeout(() => $("views").classList.remove("loading"), 9999);
 };
 
 //inherited path from server
