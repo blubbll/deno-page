@@ -49,15 +49,17 @@
     </script>
   </head>
   <body class="loading">
-    <div class="bg-blue">
+    <div id="header">
+      
       <header
+
         class="container-lg mx-auto p-responsive d-flex flex-items-center flex-wrap flex-md-nowrap py-3"
       >
-        <h3 class="mr-4 pb-1">
+        <h3 id="logo" class="mr-4 pb-1">
           <a href="/" class="text-white">deno-page</a>
         </h3>
-        <a class="text-white mr-3" href="/click">Click me</a>
-        <a class="text-white mr-3" href="/sub/dir">sub dir</a>
+        <a class="mr-3" href="/click">Click me</a>
+        <a class="mr-3" href="/sub/dir">sub dir</a>
       </header>
     </div>
     <noscript>Pweaze enable js</noscript>
@@ -68,7 +70,7 @@
         class="container-lg mx-auto py-6 p-responsive my-auto"
         data-bind="view"
       >
-        <div class="markdown-body">
+        <div class="box markdown-body">
           <h1>Hello World!</h1>
         </div>
       </view>
@@ -77,8 +79,34 @@
         class="container-lg mx-auto py-6 p-responsive my-auto"
         data-bind="view"
       >
-        <div class="markdown-body">
-          <h1>You clicked me!</h1>
+        <div class="Box">
+          <div class="Box-header">
+            <h3 class="Box-title">
+              you clicked me!
+            </h3>
+          </div>
+          <div class="Box-body">
+            <div class="box container-lg clearfix">
+              <div class="col-sm-6 col-md-3 col-lg-2 float-left p-2 border">
+                .col-sm-6 .col-md-3 .col-lg-2
+              </div>
+              <div class="col-sm-6 col-md-3 col-lg-2 float-left p-2 border">
+                .col-sm-6 .col-md-3 .col-lg-2
+              </div>
+              <div class="col-sm-6 col-md-3 col-lg-2 float-left p-2 border">
+                .col-sm-6 .col-md-3 .col-lg-2
+              </div>
+              <div class="col-sm-6 col-md-3 col-lg-2 float-left p-2 border">
+                .col-sm-6 .col-md-3 .col-lg-2
+              </div>
+              <div class="col-sm-6 col-md-3 col-lg-2 float-left p-2 border">
+                .col-sm-6 .col-md-3 .col-lg-2
+              </div>
+              <div class="col-sm-6 col-md-3 col-lg-2 float-left p-2 border">
+                .col-sm-6 .col-md-3 .col-lg-2
+              </div>
+            </div>
+          </div>
         </div>
       </view>
       <view
@@ -86,7 +114,7 @@
         class="container-lg mx-auto py-6 p-responsive my-auto"
         data-bind="view"
       >
-        <div class="markdown-body">
+        <div class="box markdown-body">
           <h1>I heard this is a subdir</h1>
         </div>
       </view>
@@ -101,11 +129,11 @@
       </view>
     </views>
 
-    <div class="bg-gray-dark">
+    <div id="footer" class="bg-gray-dark">
       <footer
         class="container-lg mx-auto p-responsive d-flex flex-items-center flex-wrap flex-md-nowrap py-3"
       >
-        <p class="text-white mb-0">
+        <p id="copy" class="mb-0">
           &copy;<span data-bind="text: year"></span> by Blubbll
         </p>
       </footer>

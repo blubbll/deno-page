@@ -20,18 +20,31 @@ let { model, ruru } = window;
 ruru = args => {
   if (args.ctx && args.ctx.state.path === model.state().path) return false;
 
-  for (const v of $$("view")) v.classList.remove("loading");
+  {
+    //remove other active
+    for (const v of $$("header a")) v.classList.remove("active");
+    const _nav = $(
+      `header a[href="${(args.ctx.state.path === "" ? "/" : "") +
+        args.ctx.state.path}"]`
+    );
+    _nav && _nav.classList.add("active");
+  }
 
-  const _view = $(`[path="${args.ctx.state.path}"]`);
+  {
+    //clear other loading blurs
+    for (const v of $$("view")) v.classList.remove("loading");
 
-  if (!window.chrome || isMobile()) {
-    console.log("view:", _view);
+    const _view = $(`[path="${args.ctx.state.path}"]`);
 
-    setTimeout(() => _view && _view.classList.add("loading"), 0);
-    setTimeout(() => _view && _view.classList.remove("loading"), 99);
-  } else {
-    _view && _view.classList.add("loading");
-    setTimeout(() => _view && _view.classList.remove("loading"), 0);
+    if (!window.chrome || (!window.chrome && isMobile())) {
+      console.log("view:", _view);
+
+      setTimeout(() => _view && _view.classList.add("loading"), 0);
+      setTimeout(() => _view && _view.classList.remove("loading"), 99);
+    } else {
+      _view && _view.classList.add("loading");
+      setTimeout(() => _view && _view.classList.remove("loading"), 0);
+    }
   }
 
   if (model.firstrouted || !args.first) {
