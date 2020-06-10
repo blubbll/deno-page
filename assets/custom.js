@@ -2,6 +2,15 @@
 const $ = document.querySelector.bind(document),
   $$ = document.querySelectorAll.bind(document);
 
+function isMobile() {
+  var match = window.matchMedia || window.msMatchMedia;
+  if (match) {
+    var mq = match("(pointer:coarse)");
+    return mq.matches;
+  }
+  return false;
+}
+
 //get
 const { ko, page } = window;
 //set
@@ -14,8 +23,16 @@ ruru = args => {
   for (const v of $$("view")) v.classList.remove("loading");
 
   const _view = $(`[path="${args.ctx.state.path}"]`);
-  setTimeout(() => _view && _view.classList.add("loading"), 0);
-  setTimeout(() => _view && _view.classList.remove("loading"), 99);
+
+  if (!window.chrome || isMobile()) {
+    console.log("view:", _view);
+
+    setTimeout(() => _view && _view.classList.add("loading"), 0);
+    setTimeout(() => _view && _view.classList.remove("loading"), 99);
+  } else {
+    _view && _view.classList.add("loading");
+    setTimeout(() => _view && _view.classList.remove("loading"), 0);
+  }
 
   if (model.firstrouted || !args.first) {
     //only if we aren't here already
