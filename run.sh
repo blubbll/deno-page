@@ -1,13 +1,24 @@
 #!/bin/sh
-#
-_PATH="/data/app/deno-page"
-_REPO="https://github.com/blubbll/deno-page.git"
+#### vars
+_PATH="/data/app"
+_REPO_NAME="deno-page"
+_REPO_AUTHOR="blubbll"
+_REPO="https://github.com/$_REPO_AUTHOR/$_REPO_NAME.git"
 _DENO_REMOTE_BIN="https://libs.b-cdn.net/deno"
-_ENTRY_FILE="https://raw.githubusercontent.com/blubbll/deno-page/glitch/index.ts.js"
-#
-rm -r $_PATH
-git clone $_REPO
+_ENTRY_FILE="https://raw.githubusercontent.com/$_REPO_AUTHOR/$_REPO_NAME/glitch/index.ts.js"
+####
+# clear local repo
+rm -r $_PATH/$_REPO_NAME
+# clone it again
+git clone $_REPO $_PATH/$_REPO_NAME
+cp -R $_PATH/$_REPO_NAME/* $_PATH
+# get deno executable
 wget -O $_PATH/deno $_DENO_REMOTE_BIN
+# make it executable
 chmod u+x $_PATH/deno
+# get entry script
 wget -O $_PATH/script.ts $_ENTRY_FILE
-$_PATH/deno run --allow-all $_PATH/script.ts
+# and run it...
+echo $(ls)
+echo $(ls $_PATH)
+$_PATH/deno run --allow-all script.ts

@@ -13,7 +13,8 @@ const __dirname = window.Deno.env.toObject().PWD;
 
 const app = new Application(),
   router = new Router(),
-  host = "https://deno-page.glitch.me";
+  //host = "https://deno-page.glitch.me";
+  host = "https://deno-page.eu-4.evennode.com/";
 
 {
   //sitemap
@@ -51,8 +52,8 @@ const app = new Application(),
 
 //serve
 app.get(".*", async ctx => {
-  console.debug(ctx.req.path)
-  
+  console.debug(ctx.req.path);
+
   {
     let mime;
 
@@ -68,10 +69,11 @@ app.get(".*", async ctx => {
     }
     if (mime) {
       ctx.res.setMimeType(mime);
-      return (await readFileStr(`${__dirname}/assets/${ctx.req.path.slice(1)}`)).trim()
+      return (await readFileStr(
+        `${__dirname}/assets/${ctx.req.path.slice(1)}`
+      )).trim();
     } else {
       ctx.res.setMimeType("text/html");
-      console.log(`${__dirname}/views/index.html`)
       return (await readFileStr(`${__dirname}/views/index.html`))
         .replace("{{from}}", ctx.req.path)
         .replace(
@@ -84,6 +86,5 @@ app.get(".*", async ctx => {
 });
 
 (async () => {
-
   await app.run();
 })();
