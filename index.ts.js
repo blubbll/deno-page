@@ -1,4 +1,5 @@
 // https://deno.land demo code
+
 import { serve } from "https:/deno.land/std@v0.50.0/http/server.ts";
 import { readFileStr } from "https://deno.land/std/fs/read_file_str.ts";
 import { __ } from "https://deno.land/x/dirname/mod.ts";
@@ -8,7 +9,7 @@ import {
   Router
 } from "https://deno.land/x/denotrain@v0.5.0/mod.ts";
 
-const __dirname = eval("Deno.cwd()");
+const __dirname = window.Deno.env.toObject().PWD;
 
 const app = new Application(),
   router = new Router(),
@@ -70,6 +71,7 @@ app.get(".*", async ctx => {
       return (await readFileStr(`${__dirname}/assets/${ctx.req.path.slice(1)}`)).trim()
     } else {
       ctx.res.setMimeType("text/html");
+      console.log(`${__dirname}/views/index.html`)
       return (await readFileStr(`${__dirname}/views/index.html`))
         .replace("{{from}}", ctx.req.path)
         .replace(
@@ -82,5 +84,6 @@ app.get(".*", async ctx => {
 });
 
 (async () => {
+
   await app.run();
 })();
