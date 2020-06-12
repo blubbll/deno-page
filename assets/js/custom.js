@@ -24,8 +24,7 @@ ruru = args => {
     //remove other active
     for (const v of $$("header a")) v.classList.remove("active");
     const _nav = $(
-      `header a[href="${(args.ctx.state.path === "" ? "/" : "") +
-        args.ctx.state.path}"]`
+      `header a[href="${args.param || args.ctx.state.path}"]`
     );
     _nav && _nav.classList.add("active");
   }
@@ -98,7 +97,9 @@ ko.applyBindings(
     {
       self.year = new Date().getFullYear();
       self.state = ko.observable({});
-      self.darkEnabled = ko.observable(false);
+      self.darkEnabled = ko.observable(
+        JSON.parse(localStorage.getItem("darkmode")) || false
+      );
       self.dark = ko.computed(() => {
         return this.darkEnabled() ? "darkmode" : "";
       });
@@ -108,8 +109,9 @@ ko.applyBindings(
     {
       self.goToIndex = () => {};
       self.toggleDark = () => {
-        const val = self.darkEnabled();
-        self.darkEnabled(!val);
+        const val = !self.darkEnabled();
+        self.darkEnabled(val);
+        localStorage.setItem("darkmode", val);
 
         $("body").classList.add("loading");
         setTimeout(() => $("body").classList.remove("loading"), 199);
@@ -119,7 +121,11 @@ ko.applyBindings(
     //expose model func
     model = this;
 
-    $("body").classList.remove("loading");
+            setTimeout(() => {$("body").classList.remove("loading"), $("body").setAttribute("style", "")}, 199);
+
+
+
+    
   })()
 );
 

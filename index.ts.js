@@ -68,7 +68,7 @@ app.get(".*", async ctx => {
     }
     if (mime) {
       ctx.res.setMimeType(mime);
-      return await readFileStr(`${__dirname}/assets/${ctx.req.path.slice(1)}`);
+      return (await readFileStr(`${__dirname}/assets/${ctx.req.path.slice(1)}`)).trim()
     } else {
       ctx.res.setMimeType("text/html");
       return (await readFileStr(`${__dirname}/views/index.html`))

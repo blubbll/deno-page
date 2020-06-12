@@ -16,8 +16,8 @@ body {
   border-top: 1px solid #3CB2E3;
 }
 
-main{
-    border-top: 1px solid #032A46;
+main {
+  border-top: 1px solid #032A46;
 }
 
 header {
@@ -58,6 +58,12 @@ header nav a.active {
   border: 1px solid #d5d5d5;
   border-radius: 6px;
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+.border {
+  border-color: #d5d5d5!important;
+}
+.Box-body {
+  border-color: #d5d5d5;
 }
 
 .Box-header {
@@ -100,11 +106,22 @@ body.darkmode {
   background: #1B1B1B;
   color: rgb(235, 235, 235);
 }
+.darkmode .border {
+  border-color: rgb(15, 15, 15)!important;
+}
 .darkmode .Box {
   background-color: rgb(42, 42, 42);
+  border: 1px solid rgb(15, 15, 15);
+}
+.darkmode .Box-body {
+  border-color: rgb(15, 15, 15);
 }
 .darkmode .Box-header {
-  background-color: rgb(22, 22, 22);
+  background: rgb(22, 22, 22)
+    url(
+        https://cdn.glitch.com/d5f13d72-02d8-4651-8842-b8a3ef203339%2Fnavigation-tab_dark..png?v=1591941529377
+      )repeat-x;
+  border-color: rgb(15, 15, 15);
   color: #777777;
 }
 .darkmode #footer {
@@ -114,7 +131,7 @@ body.darkmode {
   color: rgb(57, 57, 57);
 }
 
-.darkmode header nav a{
-      color: rgba(0,0,0,.6);
-    text-shadow: 0 1px rgba(255,255,255,.2);
+.darkmode header nav a {
+  color: rgba(0, 0, 0, 0.6);
+  text-shadow: 0 1px rgba(255, 255, 255, 0.2);
 }

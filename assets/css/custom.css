@@ -87,3 +87,9 @@ header nav a {
 footer {
   color: white;
 }
+
+.markdown-body h1 {
+    padding-bottom: .3em;
+    font-size: 2em;
+    border-bottom: 1px solid darkgray;
+}

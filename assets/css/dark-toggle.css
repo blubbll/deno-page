@@ -6,9 +6,10 @@
   position: fixed;
   border-radius: 50%;
   border: none;
-  right: unset;
-  bottom: 64px;
-  left: 32px;
+  top: unset;
+  right: 5vh;
+  bottom: 5vh;
+  left: unset;
   cursor: pointer;
   transition: all 0.5s ease;
   display: flex;
