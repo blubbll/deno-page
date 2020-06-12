@@ -37,8 +37,6 @@ ruru = args => {
     const _view = $(`[path="${args.ctx.state.path}"]`);
 
     if (!window.chrome || (!window.chrome && isMobile())) {
-      console.log("view:", _view);
-
       setTimeout(() => _view && _view.classList.add("loading"), 0);
       setTimeout(() => _view && _view.classList.remove("loading"), 99);
     } else {
@@ -79,6 +77,7 @@ const initialpath = $("meta[name=path").getAttribute("content");
 //apparently page.js doesn't work without this lol
 page.configure({ window: window });
 
+//view handler (shows / hides views)
 ko.bindingHandlers.view = {
   init: (element, valueAccessor) => {
     element.style.display =
@@ -99,11 +98,22 @@ ko.applyBindings(
     {
       self.year = new Date().getFullYear();
       self.state = ko.observable({});
+      self.darkEnabled = ko.observable(false);
+      self.dark = ko.computed(() => {
+        return this.darkEnabled() ? "darkmode" : "";
+      });
     }
 
     // Behaviours
     {
       self.goToIndex = () => {};
+      self.toggleDark = () => {
+        const val = self.darkEnabled();
+        self.darkEnabled(!val);
+
+        $("body").classList.add("loading");
+        setTimeout(() => $("body").classList.remove("loading"), 199);
+      };
     }
 
     //expose model func

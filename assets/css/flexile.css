@@ -1,54 +1,11 @@
 body {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  display: flex;
-  flex-direction: column;
   background-color: #f0f0f0;
-}
-
-views {
-  height: 100%;
-  width: 100%;
-  display: flex;
-}
-
-view.loading {
-  filter: blur(0.42rem);
-}
-
-view {
-  transition: filter 99ms ease;
-  filter: none;
-  height: inherit;
-  width: inherit;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  flex-direction: column;
-}
-
-noscript {
-  color: #ff4500;
-  opacity: 1 !important;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  font-size: 5vmax;
-  text-align: center;
-  position: absolute;
-}
-
-.typing {
-  padding-right: 12px;
-  animation: type 0.5s alternate infinite;
+  border-top: 5.9px solid #1b1b1b;
 }
 
 #logo {
-  text-shadow: 2px 2px 2px #000;
+  cursor: pointer;
+  text-shadow: 1px 1px 1px #000;
 }
 
 #header {
@@ -56,7 +13,11 @@ noscript {
     url(
         https://cdn.glitch.com/d5f13d72-02d8-4651-8842-b8a3ef203339%2Fmain-bar-gradient.png?v=1591772972682
       )repeat-x;
-      border-bottom: 1px solid #032A46;
+  border-top: 1px solid #3CB2E3;
+}
+
+main{
+    border-top: 1px solid #032A46;
 }
 
 header {
@@ -65,44 +26,30 @@ header {
   border-bottom: none;
 }
 
-header a {
-  padding: 0.3rem;
+header nav a {
   color: #a5cae4;
-  font-weight: 700;
-  font-size: 14px;
-  display: block;
-  float: left;
-  vertical-align: text-bottom;
-  text-align: center;
-  outline: 0;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.65);
-  height: 35px;
-  line-height: 35px;
+  transition: filter 99ms ease !important;
 }
-
-#header a.active {
-  outline: #fff dotted 1px;
-  position: relative;
+header nav a:hover {
+  text-decoration: none;
+  filter: brightness(1.3);
+}
+header nav a:active {
+  text-decoration: none;
+  filter: brightness(0.7);
+}
+header nav a.active {
   font-weight: bold;
   color: #FFF;
   background: #2096e1
     url(
         https://cdn.glitch.com/d5f13d72-02d8-4651-8842-b8a3ef203339%2Fnavigation-tab.png?v=1591773565356
-      )repeat-xtop;
-
+      )repeat-x;
+  padding-top: 1px;
+  padding-bottom: 2px;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  z-index: 1;
-}
-
-@keyframes type {
-  from {
-    box-shadow: inset -3px 0 0 #888;
-  }
-
-  to {
-    box-shadow: inset -3px 0 0 transparent;
-  }
 }
 
 .Box {
@@ -146,4 +93,28 @@ footer a:hover {
 
 #copy {
   color: #646464;
+}
+
+/* DARK */
+body.darkmode {
+  background: #1B1B1B;
+  color: rgb(235, 235, 235);
+}
+.darkmode .Box {
+  background-color: rgb(42, 42, 42);
+}
+.darkmode .Box-header {
+  background-color: rgb(22, 22, 22);
+  color: #777777;
+}
+.darkmode #footer {
+  background: black !important;
+}
+.darkmode #copy {
+  color: rgb(57, 57, 57);
+}
+
+.darkmode header nav a{
+      color: rgba(0,0,0,.6);
+    text-shadow: 0 1px rgba(255,255,255,.2);
 }

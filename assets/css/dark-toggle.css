@@ -1,0 +1,24 @@
+.darkmode-toggle {
+  background: rgb(127, 127, 127);
+  outline: none;
+  width: 3rem;
+  height: 3rem;
+  position: fixed;
+  border-radius: 50%;
+  border: none;
+  right: unset;
+  bottom: 64px;
+  left: 32px;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: filter 99ms ease !important;
+}
+.darkmode-toggle:hover {
+  filter: brightness(1.3);
+}
+.darkmode-toggle:active {
+  filter: brightness(0.7);
+}
