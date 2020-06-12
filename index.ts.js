@@ -15,7 +15,7 @@ const app = new Application(),
   router = new Router(),
   host = window.Deno.env.toObject().PROJECT_DOMAIN
     ? "https://deno-page.glitch.me"
-    : "http://deno-page.eu-4.evennode.com/";
+    : "http://deno-page.eu-4.evennode.com";
 {
   //sitemap
   let sitemap = "";
