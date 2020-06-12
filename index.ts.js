@@ -13,9 +13,9 @@ const __dirname = window.Deno.env.toObject().PWD;
 
 const app = new Application(),
   router = new Router(),
-  //host = "https://deno-page.glitch.me";
-  host = "https://deno-page.eu-4.evennode.com/";
-
+  host = window.Deno.env.toObject().PROJECT_DOMAIN
+    ? "https://deno-page.glitch.me"
+    : "http://deno-page.eu-4.evennode.com/";
 {
   //sitemap
   let sitemap = "";
