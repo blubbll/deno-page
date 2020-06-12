@@ -50,7 +50,6 @@ const app = new Application(),
 
 //serve
 app.get(".*", async ctx => {
-  console.log(ctx.req.original.r.rd.remoteAddr)
   console.debug(ctx.req.path)
   
   {
