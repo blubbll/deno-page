@@ -7,8 +7,8 @@ _REPO="https://github.com/$_REPO_AUTHOR/$_REPO_NAME.git"
 _DENO_REMOTE_BIN="https://libs.b-cdn.net/deno"
 _ENTRY_FILE="https://raw.githubusercontent.com/$_REPO_AUTHOR/$_REPO_NAME/glitch/index.ts.js"
 ####
-# clear local repo
-rm -r $_PATH/$_REPO_NAME
+# clear cache
+rm  $_PATH/*
 # clone it again
 git clone $_REPO $_PATH/$_REPO_NAME
 cp -R $_PATH/$_REPO_NAME/* $_PATH
@@ -19,6 +19,4 @@ chmod u+x $_PATH/deno
 # get entry script
 wget -O $_PATH/script.ts $_ENTRY_FILE
 # and run it...
-echo $(ls)
-echo $(ls $_PATH)
 $_PATH/deno run --allow-all script.ts

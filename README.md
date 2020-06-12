@@ -2,5 +2,6 @@
 
 it's the future man
 
-custom evennode process script:
-- sh run.sh
+- runs on evennode.
+- zero deploy required (maybe a deno watcher that constantly watches changes idk)
+- configure: Custom Command -> app.sh
