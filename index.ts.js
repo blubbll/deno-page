@@ -51,8 +51,9 @@ const app = new Application(),
 }
 
 {
-   app.post("/melon", async ctx => {
-    console.log(ctx)
+   app.post("/melon:token", async ctx => {
+     console.log(ctx.req.params)
+    console.log(ctx.body)
     return "nothing";
   });
 }
