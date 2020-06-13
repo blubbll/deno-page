@@ -50,7 +50,7 @@ const app = new Application(),
 }
 
 {
-  //©melon deployment
+  //[melon deployment]
   if (!window.Deno.env.toObject().PROJECT_DOMAIN) {
     app.post("/melon/:token", async ctx => {
       if (ctx.req.params.token === window.Deno.env.toObject().MELON_TOKEN) {

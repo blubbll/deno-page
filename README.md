@@ -2,6 +2,7 @@
 
 it's the future man
 
-- runs on evennode.
-- zero deploy required (maybe a deno watcher that constantly watches changes idk)
-- custom command: the stuff in the app.sh
+evennode setup:
+- [process] custom command: the stuff in the app.sh (upload via ftp)
+- [env] setup a github wekhook at /melon/:token (matching MELON_TOKEN)
+- [action] zero actual deployment, just a push to github
