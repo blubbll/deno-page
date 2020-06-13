@@ -57,26 +57,16 @@ const app = new Application(),
   if (!window.Deno.env.toObject().PROJECT_DOMAIN) {
     app.post("/melon/:token", async ctx => {
       if (ctx.req.params.token === window.Deno.env.toObject().MELON_TOKEN) {
-        const commit = JSON.parse(ctx.req.body.payload).commits[0];
+        const commit = ctx.req.body.head_commit;
         //console.log(commit.id)
 
-        console.log("refreshing app yo, reason:", commit.message);
+        console.log("refreshing app yo, reason:", `"${commit.message}"`);
         window.Deno.exit();
       }
       return "nothing";
     });
   }
 }
-
-    app.post("/test", async ctx => {
-        const commit = ctx.req.body.head_commit
-        //console.log(commit.id)
-
-        console.log("refreshing app yo, reason:", commit.message);
-        window.Deno.exit();
-      
-      return "nothing";
-    });
 
 //serve
 app.get(".*", async ctx => {
