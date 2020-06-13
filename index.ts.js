@@ -1,8 +1,7 @@
-// https://deno.land demo code
+//© by Blubbll
 
 import { serve } from "https:/deno.land/std@v0.50.0/http/server.ts";
 import { readFileStr } from "https://deno.land/std/fs/read_file_str.ts";
-import { __ } from "https://deno.land/x/dirname/mod.ts";
 
 import {
   Application,
@@ -51,13 +50,16 @@ const app = new Application(),
 }
 
 {
-  app.post("/melon/:token", async ctx => {
-    if (ctx.req.params.token === window.Deno.env.toObject().MELON_TOKEN) {
-      console.log("refreshing app yo");
-      window.Deno.exit();
-    }
-    return "nothing";
-  });
+  //©melon deployment
+  if (!window.Deno.env.toObject().PROJECT_DOMAIN) {
+    app.post("/melon/:token", async ctx => {
+      if (ctx.req.params.token === window.Deno.env.toObject().MELON_TOKEN) {
+        console.log("refreshing app yo");
+        window.Deno.exit();
+      }
+      return "nothing";
+    });
+  }
 }
 
 //serve
