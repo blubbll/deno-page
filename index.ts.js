@@ -62,6 +62,11 @@ const app = new Application(),
   }
 }
 
+ app.post("/test", async ctx => {
+   console.log(ctx)
+  
+ })
+
 //serve
 app.get(".*", async ctx => {
   console.debug(ctx.req.path);
