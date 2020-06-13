@@ -52,8 +52,6 @@ const app = new Application(),
   });
 }
 
-
-
 {
   //[melon deployment]
   if (!window.Deno.env.toObject().PROJECT_DOMAIN) {
@@ -107,9 +105,20 @@ app.get(".*", async ctx => {
   }
 });
 
+setInterval(() => {
+  //onsole.log(app.app)
+}, 9999);
+
 {
+  const sockets = [];
   //abuse long-polling fetch to reload page when server changes
-  app.post("/ty", async ctx => {return await new Promise(r => setTimeout(r, sFinity))});
+  app.post("/ty", async ctx => {
+    console.log(ctx.req)
+    const ip = ctx.req.original.headers.get("x-forwarded-for").split(",")[0];
+    sockets.push(ip);
+    console.log(`${ip} connected!`);
+    return await new Promise(r => setTimeout(r, sFinity));
+  });
 }
 
 (async () => {
