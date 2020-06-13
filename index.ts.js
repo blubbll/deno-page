@@ -60,7 +60,7 @@ const app = new Application(),
         const commit = ctx.req.body.head_commit;
         //console.log(commit.id)
 
-        console.log("refreshing app yo, reason:", `"${commit.message}"`);
+        console.log("refreshing app yo, reason:", `"${commit.message}"[${commit.id}`);
         window.Deno.exit();
       }
       return "nothing";
