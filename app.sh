@@ -17,4 +17,4 @@ mv $_PATH/$_ENTRY_FILE.ts.js $_PATH/$_ENTRY_FILE.ts
 # ...go to path...
 cd $_PATH
 # ...and run it
-deno run --allow-all $_PATH/$_ENTRY_FILE.ts
+deno run --allow-net $_PATH/$_ENTRY_FILE.ts
