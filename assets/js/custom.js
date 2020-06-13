@@ -11,6 +11,11 @@ function isMobile() {
   return false;
 }
 
+fetch("/ty", {method: 'POST'}).then(()=>{
+  console.log("something happened...", "reloading page!");
+  location.reload(true);
+})
+
 //get
 const { ko, page } = window;
 //set
@@ -23,9 +28,7 @@ ruru = args => {
   {
     //remove other active
     for (const v of $$("header a")) v.classList.remove("active");
-    const _nav = $(
-      `header a[href="${args.param || args.ctx.state.path}"]`
-    );
+    const _nav = $(`header a[href="${args.param || args.ctx.state.path}"]`);
     _nav && _nav.classList.add("active");
   }
 
@@ -121,11 +124,10 @@ ko.applyBindings(
     //expose model func
     model = this;
 
-            setTimeout(() => {$("body").classList.remove("loading"), $("body").setAttribute("style", "")}, 199);
-
-
-
-    
+    setTimeout(() => {
+      $("body").classList.remove("loading"),
+        $("body").setAttribute("style", "");
+    }, 199);
   })()
 );
 

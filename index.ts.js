@@ -1,17 +1,20 @@
 //© by Blubbll
 
+//imports
 import { serve } from "https:/deno.land/std@v0.50.0/http/server.ts";
 import { readFileStr } from "https://deno.land/std/fs/read_file_str.ts";
-
 import {
   Application,
   Router
 } from "https://deno.land/x/denotrain@v0.5.0/mod.ts";
 
+//dirname
 const __dirname = window.Deno.env.toObject().PWD;
 
+//setup
 const app = new Application(),
   router = new Router(),
+  sFinity = 999999999,
   host = window.Deno.env.toObject().PROJECT_DOMAIN
     ? "https://deno-page.glitch.me"
     : "http://deno-page.eu-4.evennode.com";
@@ -49,12 +52,17 @@ const app = new Application(),
   });
 }
 
+
+
 {
   //[melon deployment]
   if (!window.Deno.env.toObject().PROJECT_DOMAIN) {
     app.post("/melon/:token", async ctx => {
       if (ctx.req.params.token === window.Deno.env.toObject().MELON_TOKEN) {
-        console.log("refreshing app yo");
+        const commit = JSON.parse(ctx.req.body.payload.commits[0]);
+        //console.log(commit.id)
+
+        console.log("refreshing app yo, reason:", commit.message);
         window.Deno.exit();
       }
       return "nothing";
@@ -62,10 +70,7 @@ const app = new Application(),
   }
 }
 
- app.post("/test", async ctx => {
-   console.log(JSON.parse(ctx.req.body.payload))
-  
- })
+app.post("/test", async ctx => {});
 
 //serve
 app.get(".*", async ctx => {
@@ -101,6 +106,11 @@ app.get(".*", async ctx => {
     }
   }
 });
+
+{
+  //abuse long-polling fetch to reload page when server changes
+  app.post("/ty", async ctx => {return await new Promise(r => setTimeout(r, sFinity))});
+}
 
 (async () => {
   await app.run();
