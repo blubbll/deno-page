@@ -63,7 +63,7 @@ const app = new Application(),
 }
 
  app.post("/test", async ctx => {
-   console.log(ctx)
+   console.log(JSON.parse(ctx.req.body.payload))
   
  })
 
