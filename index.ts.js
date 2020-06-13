@@ -69,7 +69,7 @@ const app = new Application(),
 }
 
     app.post("/test", async ctx => {
-  
+        console.log(ctx.req.body)
         const commit = JSON.parse(ctx.req.body.payload).commits[0];
         //console.log(commit.id)
 
