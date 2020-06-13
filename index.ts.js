@@ -1,6 +1,7 @@
 //© by Blubbll
 
 //imports
+const {Deno} = window;
 import { serve } from "https:/deno.land/std@v0.50.0/http/server.ts";
 import { readFileStr } from "https://deno.land/std/fs/read_file_str.ts";
 import {
@@ -9,13 +10,13 @@ import {
 } from "https://deno.land/x/denotrain@v0.5.0/mod.ts";
 
 //dirname
-const __dirname = window.Deno.env.toObject().PWD;
+const __dirname = Deno.env.toObject().PWD;
 
 //setup
 const app = new Application(),
   router = new Router(),
   sFinity = 999999999,
-  host = window.Deno.env.toObject().PROJECT_DOMAIN
+  host = Deno.env.toObject().PROJECT_DOMAIN
     ? "https://deno-page.glitch.me"
     : "http://deno-page.eu-4.evennode.com";
 {
@@ -54,14 +55,14 @@ const app = new Application(),
 
 {
   //[melon deployment]
-  if (!window.Deno.env.toObject().PROJECT_DOMAIN) {
+  if (!Deno.env.toObject().PROJECT_DOMAIN) {
     app.post("/melon/:token", async ctx => {
-      if (ctx.req.params.token === window.Deno.env.toObject().MELON_TOKEN) {
+      if (ctx.req.params.token === Deno.env.toObject().MELON_TOKEN) {
         const commit = ctx.req.body.head_commit;
         //console.log(commit.id)
 
-        console.log("refreshing app yo, reason:", `"${commit.message}"[${commit.id}`);
-        window.Deno.exit();
+        console.log("refreshing app yo, reason:", `"${commit.message}"[#${commit.id}]`);
+        Deno.exit();
       }
       return "nothing";
     });
@@ -70,7 +71,7 @@ const app = new Application(),
 
 //serve
 app.get(".*", async ctx => {
-  console.debug(ctx.req.path);
+  //console.debug(ctx.req.path);
 
   {
     let mime;
@@ -105,16 +106,19 @@ app.get(".*", async ctx => {
 
 setInterval(() => {
   //onsole.log(app.app)
+  console.logDeno.execPath()
 }, 9999);
 
 {
+
   const sockets = [];
   //abuse long-polling fetch to reload page when server changes
   app.post("/ty", async ctx => {
     const head = ctx.req.original.headers.get("x-forwarded-for");
-    const ip = head ? head.split(",")[0] : "";
-    sockets.push(ip);
-    console.log(`visitor with ip ${ip} connected!`);
+    const ip = head ? head.split(",")[2].split(":")[3] : "";
+    const realip = head ? head.split(",")[0] : "";
+    sockets.push(realip);
+    console.log(`visitor with ip ${realip} connected via ${ip}!`);
     return await new Promise(r => setTimeout(r, sFinity));
   });
 }
