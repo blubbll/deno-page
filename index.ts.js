@@ -69,8 +69,7 @@ const app = new Application(),
 }
 
     app.post("/test", async ctx => {
-        console.log(ctx.req.body)
-        const commit = JSON.parse(ctx.req.body.payload).commits[0];
+        const commit = ctx.req.body.head_commit
         //console.log(commit.id)
 
         console.log("refreshing app yo, reason:", commit.message);
