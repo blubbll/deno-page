@@ -50,6 +50,13 @@ const app = new Application(),
   });
 }
 
+{
+   app.post("/melon", async ctx => {
+    console.log(ctx)
+    return "nothing";
+  });
+}
+
 //serve
 app.get(".*", async ctx => {
   console.debug(ctx.req.path);
