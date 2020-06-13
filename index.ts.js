@@ -51,9 +51,11 @@ const app = new Application(),
 }
 
 {
-   app.post("/melon/:token", async ctx => {
-     console.log(ctx.req.params)
-    console.log(ctx.body)
+  app.post("/melon/:token", async ctx => {
+    if (ctx.req.params.token === window.Deno.env.toObject().MELON_TOKEN) {
+      console.log("refreshing app yo");
+      window.Deno.exit();
+    }
     return "nothing";
   });
 }
