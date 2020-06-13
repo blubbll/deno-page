@@ -114,7 +114,7 @@ setInterval(() => {
     const head = ctx.req.original.headers.get("x-forwarded-for");
     const ip = head ? head.split(",")[0] : "";
     sockets.push(ip);
-    console.log(`${ip} connected!`);
+    console.log(`visitor with ip ${ip} connected!`);
     return await new Promise(r => setTimeout(r, sFinity));
   });
 }
