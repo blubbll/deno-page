@@ -128,7 +128,7 @@ app.get(".*", async ctx => {
         const port = +((line.split(":")[line.split(":")[2]=== "ffff" ? 4:3]||"").trim());
 
         //t += line;
-        console.log({state, ip, port})
+        port && console.log({state, ip, port})
       }
     }
     //t = t.trim();
