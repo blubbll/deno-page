@@ -4,7 +4,8 @@
 const { Deno } = window;
 import { serve } from "https:/deno.land/std@v0.50.0/http/server.ts";
 import { readFileStr } from "https://deno.land/std/fs/read_file_str.ts";
-import { exec } from "https://deno.land/x/exec/mod.ts";
+import { readLines } from "https://deno.land/std@v0.51.0/io/bufio.ts";
+
 
 import {
   Application,
@@ -111,25 +112,37 @@ app.get(".*", async ctx => {
 
 {
   //socket stuff
-  setInterval(async() => {
-    //onsole.log(app.app)
-    let r = await exec(
-  `ss`,
-);
-    console.log(r)
-    for (const sock in sockets) {
-      console.log(sock);
-    }
-  }, 999);
+  setInterval(async () => {
+    const ips = `/app/ips`;
 
-  const sockets = [""];
+    const p = await Deno.run({
+      cmd: ["ss"],
+      stdout: "piped"
+    });
+  let t = "";
+ for await (const line of readLines(p.stdout)) {
+   t+=line
+  } t = t.trim();
+
+    for (const sock of socks) {
+      if(sock && !t.includes(`::ffff:${sock.prx}`))
+        {
+          //remove sock
+          socks.splice(socks.indexOf(sock))
+          console.log(`Sock with ip ${sock.ip} disconnected!`)
+        }
+    }
+    console.log(`Connected visitors: ${socks.length-1}`)
+  }, 9999);
+
+  const socks = [""];
   //abuse long-polling fetch to reload page when server changes
   app.post("/ty", async ctx => {
     const head = ctx.req.original.headers.get("x-forwarded-for");
-    const ip = head ? head.split(",")[2].split(":")[3] : "";
-    const realip = head ? head.split(",")[0] : "";
-    sockets.push(realip);
-    console.log(`visitor with ip ${realip} connected via ${ip}!`);
+    const prx = head ? head.split(",")[2].split(":")[3] : "";
+    const ip = head ? head.split(",")[0] : "";
+    socks.push({ip, prx});
+    console.log(`visitor with ip ${ip} connected via ${prx}!`);
     return await new Promise(r => setTimeout(r, sFinity));
   });
 }
