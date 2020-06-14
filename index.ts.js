@@ -142,8 +142,8 @@ app.get(".*", async ctx => {
     
     console.log(head)
     
-    /*const prx = head ? head.split(",")[2].split(":")[3] : "";
-    const ip = head ? head.split(",")[0] : "";
+    const prx = head.includes(":") ? head.split(",")[2].split(":")[3] : head;
+    const ip = head.includes(":") ? head ? head.split(",")[0] : h;
     socks.push({ip, prx});
     console.log(`visitor with ip ${ip} connected via ${prx}!`);*/
     return await new Promise(r => setTimeout(r, sFinity));
