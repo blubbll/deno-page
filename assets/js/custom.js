@@ -11,10 +11,10 @@ function isMobile() {
   return false;
 }
 
-fetch("/ty", {method: 'POST'}).then(()=>{
+fetch("/ty", { method: "POST" }).then(() => {
   console.log("something happened...", "reloading page!");
-  setTimeout(()=>location.reload(true),4999);
-})
+  setTimeout(() => location.reload(true), 9999);
+});
 
 //get
 const { ko, page } = window;
