@@ -124,8 +124,8 @@ app.get(".*", async ctx => {
       if (line.startsWith("tcp")) {
         //console.log(line)
         const state = line.includes(" ESTAB ") ? true : false
-        const ip = line.split(":")[line.split(":")[2]=== "ffff" ? 3:0].trim();
-        const port = +((line.split(":")[line.split(":")[2]=== "ffff" ? 4:1]||"").trim());
+        const ip = line.split(":")[line.split(":")[2]=== "ffff" ? 3:1].trim();
+        const port = +((line.split(":")[line.split(":")[2]=== "ffff" ? 4:2]||"").trim());
 
         //t += line;
         console.log({state, ip, port})
