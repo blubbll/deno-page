@@ -125,6 +125,7 @@ app.get(".*", async ctx => {
     t = t.trim();
 
     for (const sock of socks) {
+      console.log(t)
       if (sock && !t.includes(`::ffff:${sock.prx}`)) {
         //remove sock
         socks.splice(socks.indexOf(sock));
