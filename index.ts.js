@@ -132,7 +132,8 @@ app.get(".*", async ctx => {
           //evennode
           ip = line
             .split(":")[1]
-            .split(" ")[1];
+            .slice(5)//bye listenport
+            .trim();
           port = +(line.split(":")[2] || "").trim();
         }
 
@@ -158,7 +159,7 @@ app.get(".*", async ctx => {
   app.post("/ty", async ctx => {
     //console.log(ctx.req)
     const _sock = ctx.req.original.conn.remoteAddr;
-    const sock = `${_sock.hostname}${_sock.port}`;
+    const sock = `${_sock.hostname}:${_sock.port}`;
 
     //console.log(ctx.req.original.headers)
     const head = ctx.req.original.headers.get("x-forwarded-for");
