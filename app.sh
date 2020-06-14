@@ -1,12 +1,13 @@
 #!/bin/sh
 #### vars
-_APP_PATH="/data/app"
 _REPO_AUTHOR="blubbll"
 _REPO_NAME="deno-page"
-_ENTRY_FILE="index"
-#### dynamics
 _DENO_FLAGS="--allow-read --allow-net --allow-env --allow-run"
+#### defaults probably
+_APP_PATH="/data/app"
+_ENTRY_FILE="index"
 _REPO="https://github.com/$_REPO_AUTHOR/$_REPO_NAME.git"
+#### dynamics
 _PATH=$_APP_PATH/$_REPO_NAME
 #### action
 # clear cache
