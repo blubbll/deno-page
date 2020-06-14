@@ -6,7 +6,6 @@ import { serve } from "https:/deno.land/std@v0.50.0/http/server.ts";
 import { readFileStr } from "https://deno.land/std/fs/read_file_str.ts";
 import { readLines } from "https://deno.land/std@v0.51.0/io/bufio.ts";
 
-
 import {
   Application,
   Router
@@ -119,33 +118,31 @@ app.get(".*", async ctx => {
       cmd: ["ss"],
       stdout: "piped"
     });
-  let t = "";
- for await (const line of readLines(p.stdout)) {
-   t+=line
-  } t = t.trim();
+    let t = "";
+    for await (const line of readLines(p.stdout)) {
+      t += line;
+    }
+    t = t.trim();
 
     for (const sock of socks) {
-      if(sock && !t.includes(`::ffff:${sock.prx}`))
-        {
-          //remove sock
-          socks.splice(socks.indexOf(sock))
-          console.log(`Sock with ip ${sock.ip} disconnected!`)
-        }
+      if (sock && !t.includes(`::ffff:${sock.prx}`)) {
+        //remove sock
+        socks.splice(socks.indexOf(sock));
+        console.log(`Sock with ip ${sock.ip} disconnected!`);
+      }
     }
-    console.log(`Connected visitors: ${socks.length-1}`)
+    console.log(`Connected visitors: ${socks.length - 1}`);
   }, 9999);
 
   const socks = [""];
   //abuse long-polling fetch to reload page when server changes
   app.post("/ty", async ctx => {
     const head = ctx.req.original.headers.get("x-forwarded-for");
-    
-    console.log(head)
-    
+
     const prx = head.includes(":") ? head.split(",")[2].split(":")[3] : head;
-    const ip = head.includes(":") ? head ? head.split(",")[0] : h;
-    socks.push({ip, prx});
-    console.log(`visitor with ip ${ip} connected via ${prx}!`);*/
+    const ip = head.includes(":") ? head.split(",")[0] : head;
+    socks.push({ ip, prx });
+    console.log(`visitor with ip ${ip} connected via ${prx}!`);
     return await new Promise(r => setTimeout(r, sFinity));
   });
 }
