@@ -120,14 +120,14 @@ app.get(".*", async ctx => {
     });
     //let t = "";
     for await (const line of readLines(p.stdout)) {
-      console.log(line.split("    ")[1]);
-
+      
       if (line.startsWith("tcp")) {
         console.log(line)
         const state = line.split("    ")[1];
-        const _ip = line.split(":")[3];
+        const ip = line.split(":")[3];
+        const port = line.split(":")[4]
         //t += line;
-        console.log({state, _ip})
+        console.log({state, ip, port})
       }
     }
     //t = t.trim();
