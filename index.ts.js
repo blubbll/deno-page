@@ -132,13 +132,28 @@ app.get(".*", async ctx => {
           //evennode
           ip = line
             .split(":")[1]
-            .slice(5)//bye listenport
+            .slice(5) //bye listenport
             .trim();
           port = +(line.split(":")[2] || "").trim();
         }
+        const _sock = `${ip}:${port}`;
+
+        if (!state) {
+          //console.log(socks)
+          const sockQ = socks.find(_ => _[_sock]);
+          if (sockQ) {
+            const sock = Object.values(sockQ)[0]
+          
+            //reject promise
+            sock.controller.abort();
+            //remove conn
+            socks.splice(sock, 1);
+            console.log(`Sock ${_sock} disconnected!`);
+          }
+        }
 
         //t += line;
-        console.log({ state, ip, port });
+        //console.log({ state, ip, port });
       }
     }
     //t = t.trim();
@@ -151,10 +166,10 @@ app.get(".*", async ctx => {
         console.log(`Sock with ip ${sock.ip} disconnected!`);
       }*/
     }
-    console.log(`Connected visitors: ${socks.length - 1}`);
+    console.log(`Connected visitors: ${socks.length}`);
   }, 9999);
 
-  const socks = [""];
+  const socks = [];
   //abuse long-polling fetch to reload page when server changes
   app.post("/ty", async ctx => {
     //console.log(ctx.req)
@@ -166,9 +181,15 @@ app.get(".*", async ctx => {
 
     const prx = head.includes(":") ? head.split(",")[2].split(":")[3] : head;
     const ip = head.includes(":") ? head.split(",")[0] : head;
-    const promise = new Promise(r => setTimeout(r, sFinity));
-
-    socks.push({ promise, sock, ip, prx });
+    const controller = new AbortController();
+    const signal = controller.signal;
+    const promise = new Promise((res, rej) => {
+      setTimeout(res, sFinity);
+      signal.addEventListener("abort", () => {
+        rej("ead");
+      });
+    });
+    socks.push({ [sock]: { controller, prx, ip } });
     console.log(
       `visitor with ip [${ip}] connected via [${prx}] to sock [${sock}]!`
     );
