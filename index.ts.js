@@ -122,7 +122,7 @@ app.get(".*", async ctx => {
     }
   }, 999);
 
-  const sockets = [];
+  const sockets = [""];
   //abuse long-polling fetch to reload page when server changes
   app.post("/ty", async ctx => {
     const head = ctx.req.original.headers.get("x-forwarded-for");
