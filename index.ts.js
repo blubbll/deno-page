@@ -132,7 +132,7 @@ app.get(".*", async ctx => {
           //evennode
           ip = line
             .split(":")[1]
-            ;
+            .split(" ")[1];
           port = +(line.split(":")[2] || "").trim();
         }
 
