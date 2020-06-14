@@ -186,7 +186,7 @@ app.get(".*", async ctx => {
     const promise = new Promise((res, rej) => {
       setTimeout(res, sFinity);
       signal.addEventListener("abort", () => {
-        rej("ead");
+        rej(`Socket ${sock} dead`) ;
       });
     });
     socks.push({ [sock]: { controller, prx, ip } });
