@@ -120,22 +120,31 @@ app.get(".*", async ctx => {
     });
     //let t = "";
     for await (const line of readLines(p.stdout)) {
-      
       if (line.startsWith("tcp")) {
         //console.log(line)
-        const state = line.includes(" ESTAB ") ? true : false
-        const ip = line.split(":")[line.split(":")[2]=== "ffff" ? 3:1].trim();
-        const port = +((line.split(":")[line.split(":")[2]=== "ffff" ? 4:2]||"").trim());
+        const state = line.includes(" ESTAB ") ? true : false;
+        let ip, port;
+        if (line.split(":")[2] === "ffff") {
+          //glitch
+          ip = line.split(":")[3];
+          port = +line.split(":")[4];
+        } else {
+          //evennode
+          ip = line
+            .split(":")[1]
+            .trim()
+            .split(" ")[1];
+          port = +(line.split(":")[2] || "").trim();
+        }
 
         //t += line;
-        console.log({state, ip, port})
+        console.log({ state, ip, port });
       }
     }
     //t = t.trim();
 
     for (const sock of socks) {
       // console.log(t)
-
       /*if (sock && !t.includes(`::ffff:${sock.prx}`)) {
         //remove sock
         socks.splice(socks.indexOf(sock));
