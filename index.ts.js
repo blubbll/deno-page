@@ -122,10 +122,11 @@ app.get(".*", async ctx => {
     for await (const line of readLines(p.stdout)) {
       
       if (line.startsWith("tcp")) {
-        console.log(line)
-        const state = line.split("    ")[1];
-        const ip = line.split(":")[3];
-        const port = line.split(":")[4]
+        //console.log(line)
+        const state = line.includes(" ESTAB ") ? true : false
+        const ip = line.split(":")[line.split(":")[2]=== "ffff" ? 3:2].trim();
+        const port = +((line.split(":")[line.split(":")[2]=== "ffff" ? 4:3]||"").trim());
+
         //t += line;
         console.log({state, ip, port})
       }
