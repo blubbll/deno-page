@@ -138,6 +138,7 @@ app.get(".*", async ctx => {
   const socks = [""];
   //abuse long-polling fetch to reload page when server changes
   app.post("/ty", async ctx => {
+    console.log(ctx.req.original.headers)
     const head = ctx.req.original.headers.get("x-forwarded-for");
 
     const prx = head.includes(":") ? head.split(",")[2].split(":")[3] : head;
