@@ -5,7 +5,7 @@ _REPO_AUTHOR="blubbll"
 _REPO_NAME="deno-page"
 _ENTRY_FILE="index"
 #### dynamics
-_DENO_FLAGS="--allow-read --allow-net --allow-env"
+_DENO_FLAGS="--allow-read --allow-net --allow-env --allow-run"
 _REPO="https://github.com/$_REPO_AUTHOR/$_REPO_NAME.git"
 _PATH=$_APP_PATH/$_REPO_NAME
 #### action
@@ -14,8 +14,8 @@ rm -r $_PATH
 # clone repo
 git clone $_REPO $_PATH
 # make script runnable...
-mv $_PATH/$_ENTRY_FILE.ts.js $_PATH/$_ENTRY_FILE.ts
+#mv $_PATH/$_ENTRY_FILE.ts.js $_PATH/$_ENTRY_FILE.ts
 # ...go to path...
 cd $_PATH
 # ...and run it
-deno run $_DENO_FLAGS $_PATH/$_ENTRY_FILE.ts
+deno run $_DENO_FLAGS $_PATH/$_ENTRY_FILE.ts.js
