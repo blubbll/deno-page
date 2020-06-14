@@ -118,21 +118,28 @@ app.get(".*", async ctx => {
       cmd: ["ss"],
       stdout: "piped"
     });
-    let t = "";
+    //let t = "";
     for await (const line of readLines(p.stdout)) {
-      t += line;
+      console.log(line.split("    ")[1]);
+
+      if (line.startsWith("tcp")) {
+        console.log(line)
+        const state = line.split("    ")[1];
+        const _ip = line.split(":")[3];
+        //t += line;
+        console.log({state, _ip})
+      }
     }
-    t = t.trim();
+    //t = t.trim();
 
     for (const sock of socks) {
-      console.log(t)
+      // console.log(t)
 
-      
-      if (sock && !t.includes(`::ffff:${sock.prx}`)) {
+      /*if (sock && !t.includes(`::ffff:${sock.prx}`)) {
         //remove sock
         socks.splice(socks.indexOf(sock));
         console.log(`Sock with ip ${sock.ip} disconnected!`);
-      }
+      }*/
     }
     console.log(`Connected visitors: ${socks.length - 1}`);
   }, 9999);
@@ -140,16 +147,22 @@ app.get(".*", async ctx => {
   const socks = [""];
   //abuse long-polling fetch to reload page when server changes
   app.post("/ty", async ctx => {
-    console.log(ctx.req)
-    console.log(ctx.req.original)
-    console.log(ctx.req.original.headers)
+    //console.log(ctx.req)
+    const _sock = ctx.req.original.conn.remoteAddr;
+    const sock = `${_sock.hostname}${_sock.port}`;
+
+    //console.log(ctx.req.original.headers)
     const head = ctx.req.original.headers.get("x-forwarded-for");
 
     const prx = head.includes(":") ? head.split(",")[2].split(":")[3] : head;
     const ip = head.includes(":") ? head.split(",")[0] : head;
-    socks.push({ ip, prx });
-    console.log(`visitor with ip ${ip} connected via ${prx}!`);
-    return await new Promise(r => setTimeout(r, sFinity));
+    const promise = new Promise(r => setTimeout(r, sFinity));
+
+    socks.push({ promise, sock, ip, prx });
+    console.log(
+      `visitor with ip [${ip}] connected via [${prx}] to sock [${sock}]!`
+    );
+    return await promise;
   });
 }
 
