@@ -1,9 +1,11 @@
 //© by Blubbll
 
 //imports
-const {Deno} = window;
+const { Deno } = window;
 import { serve } from "https:/deno.land/std@v0.50.0/http/server.ts";
 import { readFileStr } from "https://deno.land/std/fs/read_file_str.ts";
+import { exec } from "https://deno.land/x/exec/mod.ts";
+
 import {
   Application,
   Router
@@ -61,7 +63,10 @@ const app = new Application(),
         const commit = ctx.req.body.head_commit;
         //console.log(commit.id)
 
-        console.log("refreshing app yo, reason:", `"${commit.message}"[#${commit.id}]`);
+        console.log(
+          "refreshing app yo, reason:",
+          `"${commit.message}"[#${commit.id}]`
+        );
         Deno.exit();
       }
       return "nothing";
@@ -104,12 +109,18 @@ app.get(".*", async ctx => {
   }
 });
 
-setInterval(() => {
-  //onsole.log(app.app)
-  console.logDeno.execPath()
-}, 9999);
-
 {
+  //socket stuff
+  setInterval(async() => {
+    //onsole.log(app.app)
+    let r = await exec(
+  `ss`,
+);
+    console.log(r)
+    for (const sock in sockets) {
+      console.log(sock);
+    }
+  }, 999);
 
   const sockets = [];
   //abuse long-polling fetch to reload page when server changes
