@@ -13,7 +13,7 @@ function isMobile() {
 
 fetch("/ty", {method: 'POST'}).then(()=>{
   console.log("something happened...", "reloading page!");
-  location.reload(true);
+  setTimeoutlocation.reload(true);
 })
 
 //get
