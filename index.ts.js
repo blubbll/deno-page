@@ -110,6 +110,7 @@ app.get(".*", async ctx => {
 });
 
 {
+  let sockMsg;
   //socket stuff
   setInterval(async () => {
     const ips = `/app/ips`;
@@ -142,8 +143,8 @@ app.get(".*", async ctx => {
           //console.log(socks)
           const sockQ = socks.find(_ => _[_sock]);
           if (sockQ) {
-            const sock = Object.values(sockQ)[0]
-          
+            const sock = Object.values(sockQ)[0];
+
             //reject promise
             sock.controller.abort();
             //remove conn
@@ -151,22 +152,11 @@ app.get(".*", async ctx => {
             console.log(`Sock ${_sock} disconnected!`);
           }
         }
-
-        //t += line;
-        //console.log({ state, ip, port });
       }
     }
-    //t = t.trim();
-
-    for (const sock of socks) {
-      // console.log(t)
-      /*if (sock && !t.includes(`::ffff:${sock.prx}`)) {
-        //remove sock
-        socks.splice(socks.indexOf(sock));
-        console.log(`Sock with ip ${sock.ip} disconnected!`);
-      }*/
-    }
-    console.log(`Connected visitors: ${socks.length}`);
+    const newSockMsg = `Connected visitors: ${socks.length}`;
+    if (sockMsg !== newSockMsg)
+      console.log(`Connected visitors: ${socks.length}`);
   }, 9999);
 
   const socks = [];
@@ -186,7 +176,7 @@ app.get(".*", async ctx => {
     const promise = new Promise((res, rej) => {
       setTimeout(res, sFinity);
       signal.addEventListener("abort", () => {
-        rej(`Socket ${sock} dead`) ;
+        rej(`Socket ${sock} dead`);
       });
     });
     socks.push({ [sock]: { controller, prx, ip } });

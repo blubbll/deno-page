@@ -40,7 +40,7 @@
       body.loading *:not(div):not(view) {
         opacity: 0;
       }
-      #userDarkMode{
+      #userDarkMode {
         color: black;
       }
     </style>
@@ -51,7 +51,10 @@
           document.querySelector("base").getAttribute("href") && //lol dont do this before the <base>
           location.replace(document.querySelector("base").getAttribute("href"));
         //upgrade request clientside
-        if (location.href.includes("glitch.me") && location.protocol === "http:")
+        if (
+          location.href.includes("glitch.me") &&
+          location.protocol === "http:"
+        )
           location.replace(location.href.replace("http://", "https://"));
       }
     </script>
@@ -61,9 +64,7 @@
     data-bind="class: dark"
     style="background: rgb(127,127,127)!important"
   >
-    <div id="userDarkMode">
-      eee
-    </div>
+    <div id="userDarkMode"></div>
     <div id="header">
       <header
         class="container-lg mx-auto p-responsive d-flex flex-items-center flex-wrap pt-3 flex-nowrap flex-sm-wrap"

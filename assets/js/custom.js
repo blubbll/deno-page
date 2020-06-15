@@ -97,12 +97,9 @@ ko.applyBindings(
     // proxyfying
     var self = this;
 
-    {
+    { //detect darkmode set by user
       const t = $("#userDarkMode");
       self.darkByUser = window.getComputedStyle(t).color !== "rgb(0, 0, 0)";
-      setTimeout(()=>{
-        alert(window.getComputedStyle(t).color )
-      }, 2900)
     }
     
     //Data
