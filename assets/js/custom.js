@@ -96,12 +96,21 @@ ko.applyBindings(
   new (function() {
     // proxyfying
     var self = this;
+
+    {
+      const t = $("#userDarkMode");
+      self.darkByUser = window.getComputedStyle(t).color !== "rgb(0, 0, 0)";
+      setTimeout(()=>{
+        alert(window.getComputedStyle(t).color )
+      }, 2900)
+    }
+    
     //Data
     {
       self.year = new Date().getFullYear();
       self.state = ko.observable({});
       self.darkEnabled = ko.observable(
-        JSON.parse(localStorage.getItem("darkmode")) || false
+        self.darkByUser || JSON.parse(localStorage.getItem("darkmode")) || false
       );
       self.dark = ko.computed(() => {
         return this.darkEnabled() ? "darkmode" : "";
