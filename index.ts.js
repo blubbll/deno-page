@@ -65,7 +65,7 @@ const app = new Application(),
 
         console.log(
           "refreshing app yo, reason:",
-          `"${commit.message}"[#${commit.id}]`
+          `"[${commit.message}"(#${commit.id})]`
         );
         Deno.exit();
       }
