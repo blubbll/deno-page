@@ -110,7 +110,7 @@ app.get(".*", async ctx => {
 });
 
 {
-  let sockMsg;
+  let oldSockStatus;
   //socket stuff
   setInterval(async () => {
     const ips = `/app/ips`;
@@ -154,9 +154,14 @@ app.get(".*", async ctx => {
         }
       }
     }
-    const newSockMsg = `Connected visitors: ${socks.length}`;
-    if (sockMsg !== newSockMsg)
-      console.log(`Connected visitors: ${socks.length}`);
+    const newSockStatus = { msg: `Connected visitors: ${socks.length}`, socks };
+    if (
+      !oldSockStatus ||
+      oldSockStatus.socks.length !== newSockStatus.socks.length
+    ) {
+      console.log(`Connected visitors: ${newSockStatus.socks.length}`);
+      oldSockStatus = newSockStatus;
+    }
   }, 9999);
 
   const socks = [];
