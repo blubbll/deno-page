@@ -65,7 +65,7 @@ const app = new Application(),
 
         console.log(
           "refreshing app yo, reason:",
-          `"[${commit.message}"(#${commit.id})]`
+          `["${commit.message}"(#${commit.id})]`
         );
         Deno.exit();
       }
@@ -110,7 +110,7 @@ app.get(".*", async ctx => {
 });
 
 {
-  let oldSockStatus;
+  let oldSocks;
   //socket stuff
   setInterval(async () => {
     const ips = `/app/ips`;
@@ -154,15 +154,13 @@ app.get(".*", async ctx => {
         }
       }
     }
-    const newSockStatus = { msg: `Connected visitors: ${socks.length}`, socks };
-    if (
-      !oldSockStatus ||
-      oldSockStatus.socks.length !== newSockStatus.socks.length
-    ) {
-      console.log(`Connected visitors: ${newSockStatus.socks.length}`);
-      oldSockStatus = newSockStatus;
+
+    const newSocks = { socks, count: socks.length };
+    if (!oldSocks || oldSocks.count != newSocks.count) {
+      console.log(`Connected visitors: ${newSocks.count}`);
+      oldSocks = Object.assign(newSocks);
     }
-  }, 9999);
+  }, 3999);
 
   const socks = [];
   //abuse long-polling fetch to reload page when server changes
