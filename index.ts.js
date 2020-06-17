@@ -177,8 +177,9 @@ app.get(".*", async ctx => {
     const controller = new AbortController();
     const signal = controller.signal;
     const promise = new Promise((res, rej) => {
-      setTimeout(res, sFinity);
+      const t = setTimeout(res, sFinity);
       signal.addEventListener("abort", () => {
+        clearTimeout(t);
         rej(`Socket ${sock} dead`);
       });
     });
