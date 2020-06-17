@@ -79,6 +79,7 @@ app.get(".*", async ctx => {
   //console.debug(ctx.req.path);
 
   {
+    console.log(ctx.req.original.headers)
     let mime;
 
     switch (ctx.req.path.split(".")[ctx.req.path.split(".").length - 1]) {
@@ -160,7 +161,7 @@ app.get(".*", async ctx => {
       console.log(`Connected visitors: ${newSocks.count}`);
       oldSocks = Object.assign(newSocks);
     }
-  }, 3999);
+  }, 29999);
 
   const socks = [];
   //abuse long-polling fetch to reload page when server changes
