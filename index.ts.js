@@ -2,7 +2,6 @@
 
 //imports
 const { Deno } = window;
-import { serve } from "https:/deno.land/std@v0.50.0/http/server.ts";
 import { readFileStr } from "https://deno.land/std/fs/read_file_str.ts";
 import { readLines } from "https://deno.land/std@v0.51.0/io/bufio.ts";
 
@@ -79,7 +78,7 @@ app.get(".*", async ctx => {
   //console.debug(ctx.req.path);
 
   {
-    console.log(ctx.req.original.headers)
+    //console.log(ctx.req.original.headers)
     let mime;
 
     switch (ctx.req.path.split(".")[ctx.req.path.split(".").length - 1]) {
