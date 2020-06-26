@@ -1,0 +1,7 @@
+/node_modules
+/README.md
+/src
+/dist
+/test
+/.*
+/*.tgz
