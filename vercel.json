@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "functions": {
+    "index.ts.js": { "runtime": "vercel-deno@0.3.0" }
+  }
+}
