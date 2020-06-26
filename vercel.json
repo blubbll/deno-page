@@ -1,6 +1,6 @@
 {
-  "version": 2,
+  "public": true,
   "functions": {
-    "index.ts.js": { "runtime": "vercel-deno@0.3.0" }
+    "*.[jt]s": { "runtime": "vercel-deno@0.3.0" }
   }
 }
