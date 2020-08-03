@@ -2,7 +2,6 @@
 
 //imports
 const { Deno } = window;
-import { readFileStr } from "https://deno.land/std/fs/read_file_str.ts";
 import { readLines } from "https://deno.land/std@v0.51.0/io/bufio.ts";
 
 import {
@@ -16,6 +15,7 @@ const __dirname = Deno.env.toObject().PWD;
 //setup
 const app = new Application(),
   router = new Router(),
+  decoder = new TextDecoder("utf-8"),
   sFinity = 999999999,
   host = Deno.env.toObject().PROJECT_DOMAIN
     ? "https://deno-page.glitch.me"
@@ -93,12 +93,16 @@ app.get(".*", async ctx => {
     }
     if (mime) {
       ctx.res.setMimeType(mime);
-      return (await readFileStr(
-        `${__dirname}/assets/${ctx.req.path.slice(1)}`
-      )).trim();
+
+      return decoder
+        .decode(
+          await Deno.readFile(`${__dirname}/assets/${ctx.req.path.slice(1)}`)
+        )
+        .trim();
     } else {
       ctx.res.setMimeType("text/html");
-      return (await readFileStr(`${__dirname}/views/index.html`))
+      return decoder
+        .decode(await Deno.readFile(`${__dirname}/views/index.html`))
         .replace("{{from}}", ctx.req.path)
         .replace(
           "{{base}}",
@@ -108,6 +112,9 @@ app.get(".*", async ctx => {
     }
   }
 });
+
+const socks = [],
+  pending = [];
 
 {
   let oldSocks;
@@ -162,9 +169,12 @@ app.get(".*", async ctx => {
     }
   }, 29999);
 
-  const socks = [];
-  //abuse long-polling fetch to reload page when server changes
-  app.post("/ty", async ctx => {
+  //abuse long-polling to setup a session to a visitor
+  app.post("/con/:guid", async ctx => {
+    const guid = ctx.req.params.guid;
+    //bad guid, have a retry eh
+    if (socks.find(x => x[guid])) return false;
+
     //console.log(ctx.req)
     const _sock = ctx.req.original.conn.remoteAddr;
     const sock = `${_sock.hostname}:${_sock.port}`;
@@ -183,13 +193,53 @@ app.get(".*", async ctx => {
         rej(`Socket ${sock} dead`);
       });
     });
-    socks.push({ [sock]: { controller, prx, ip } });
+    socks.push({ [guid]: { controller, prx, ip, sock } });
     console.log(
       `visitor with ip [${ip}] connected via [${prx}] to sock [${sock}]!`
     );
     return await promise;
   });
+
+  //abuse long-polling fetch to exchange data with a visitor
+  app.post("/lis/:guid", async ctx => {
+    const guid = ctx.req.params.guid;
+
+    const visitor = socks.find(x => x[guid])[guid];
+
+    if (!visitor) return;
+
+    const controller = (visitor.packetController = new AbortController());
+    const signal = controller.signal;
+    visitor.packetSignal = controller.signal;
+
+    const promise = new Promise((res, rej) => {
+      const t = setTimeout(res, sFinity);
+      signal.addEventListener("abort", () => {
+        const packetData = pending.find(x => x[guid]);
+        const payload = packetData.data;
+        return payload;
+
+        clearTimeout(t);
+      });
+    });
+
+    console.log(`visitor ${guid} joined the messaging channel!`);
+    return await promise;
+  });
 }
+
+setInterval(_ => {
+  for (const sock of socks) {
+    const guid = Object.keys(sock)[0];
+    const visitor = socks.find(x => x[guid])[guid];
+
+    if (visitor) {
+      pending.push({ receiver: guid, data: +new Date() });
+      console.log(visitor.packetSignal)
+      visitor.packetSignal.abort();
+    }
+  }
+}, 999);
 
 (async () => {
   await app.run();

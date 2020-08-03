@@ -11,11 +11,6 @@ function isMobile() {
   return false;
 }
 
-fetch("/ty", { method: "POST" }).then(() => {
-  console.log("something happened...", "reloading page!");
-  setTimeout(() => location.reload(true), 39999);
-});
-
 //get
 const { ko, page } = window;
 //set
@@ -97,11 +92,12 @@ ko.applyBindings(
     // proxyfying
     var self = this;
 
-    { //detect darkmode set by user
+    {
+      //detect darkmode set by user
       const t = $("#userDarkMode");
       self.darkByUser = window.getComputedStyle(t).color !== "rgb(0, 0, 0)";
     }
-    
+
     //Data
     {
       self.year = new Date().getFullYear();
@@ -130,6 +126,7 @@ ko.applyBindings(
     //expose model func
     model = this;
 
+    //reveal site
     setTimeout(() => {
       $("body").classList.remove("loading"),
         $("body").setAttribute("style", "");
@@ -164,3 +161,58 @@ ko.applyBindings(
     first: true
   });
 }
+
+//guid
+function uuidv4() {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
+    var r = (Math.random() * 16) | 0,
+      v = c == "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
+
+const guid = uuidv4();
+
+//sse
+/*let evtSource = (window.evtSource = {});
+const join = force => {
+  force && evtSource.close();
+  evtSource = new EventSource(
+    `//${window.TGB_HOST}/events/${window.BRIDGE_TOKEN}`
+  );
+  evtSource.addEventListener(
+    "event",
+    evt => {
+      const payload = JSON.parse(evt.data);
+      const data = payload.data;
+      switch (payload.type) {
+        case "msg":
+          {
+            console.log(1)
+          }
+          break;
+      }
+    },
+    false
+  );
+};
+join();
+
+const rejoiner = setInterval(() => {
+  const rejoin = () => join(true);
+  evtSource.readyState === EventSource.CLOSED
+    ? [console.warn("No connection, rejoining..."), rejoin()]
+    : console.debug(
+        `Connection ${evtSource.readyState === 0 ? "waiting..." : "ok :)"}`
+      );
+}, 9999);*/
+
+fetch(`/con/${guid}`, { method: "POST" }).then(() => {
+  console.log("something happened...", "reloading page!");
+  setTimeout(() => location.reload(true), 39999);
+});
+
+fetch(`/lis/${guid}`, { method: "POST" }).then(() => {
+  console.log("something happened...", "reloading page!");
+  setTimeout(() => location.reload(true), 39999);
+});
